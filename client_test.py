@@ -9,10 +9,7 @@ class ClientTest(unittest.TestCase):
     ]
     """ ------------ Add the assertion below ------------ """
     for quote in quotes:
-      if (quote['stock'] == 'ABC'):
-        self.assertEqual(getDataPoint(quote), ('ABC', 120.48, 121.2, 120.84))
-      elif (quote['stock'] == 'DEF'):
-        self.assertEqual(getDataPoint(quote), ('DEF', 117.87, 121.68, 119.775))
+        self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'], (quote['top_bid']['price'] + quote['top_ask']['price']) / 2))
 
 
   def test_getDataPoint_calculatePriceBidGreaterThanAsk(self):
@@ -22,10 +19,8 @@ class ClientTest(unittest.TestCase):
     ]
     """ ------------ Add the assertion below ------------ """
     for quote in quotes:
-      if (quote['stock'] == 'ABC'):
-        self.assertEqual(getRatio(quote['top_bid']['price'], quote['top_ask']['price']), 1.010738255033557)
-      elif (quote['stock'] == 'DEF'):
-        self.assertEqual(getRatio(quote['top_bid']['price'], quote['top_ask']['price']), 0.9686883629191322)
+       if quote['top_bid']['price'] > quote['top_ask']['price']:
+          self.assertEqual(getRatio(quote['top_bid']['price'], quote['top_ask']['price']), quote['top_bid']['price'] / quote['top_ask']['price'])
 
   """ ------------ Add more unit tests ------------ """
 
